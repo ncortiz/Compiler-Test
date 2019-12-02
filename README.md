@@ -4,11 +4,13 @@
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License</a>.
 
+<p>
 C-like to NASM assembly compiler in one file with combined Lexer- Recursive Descent Parser-Compiler written in C++ with only standard libraries, parsers and a nice command line coloring system!
 All in only 1328 lines of code!
+</p>
 
-Grammar:
-
+<h2> Grammar: </h2>
+<code>
  NUM-LIT: [0-9]+ ['b'|'q']? 'u'?
  
  CHAR-LIT: '\'' [\0-\255] '\''
@@ -67,10 +69,82 @@ Grammar:
 					   : 'ret' expr
 					   
              : if '(' expr ')' '{' expr_block '}' ('else' '{' expr_block '}' )?
-             
-Examples:
+</code>      
 
-- This works 100%:
+<h2> Summary: <h2>
+	
+<h3> Types are: </h3>
+<p>
+byte, word, dword, qword, void,
+signed/unsigned versions of these and pointer versions of these.
+
+A value that has 'u' at the end of it e.g. 18u is unsigned, if it then has ('b', 'w' or 'q') then it is a byte, word, qword value 
+respectively if it doesn't specify, it's a dword. Lastly if it has a 'p' then it's a constant pointer memory address.
+
+If a value is entered as 'x' with x being an ascii character between 0-255 then the corresponding ascii value will be read into a byte value.
+</p>
+
+<h4>
+For e.g.:
+</h4>
+<code>
+15u : unsigned dword
+15ub : unsigned byte
+15ubp : unsigned byte pointer
+
+15b : signed byte
+15bp : signed byte ptr.
+'a' : signed byte
+'@' : signed byte
+....
+</code>
+	
+<h3> Statements: </h3> 
+<code>
+'if' and 'else' do what you would expect,
+'let' allows you to set/define variables, '=' would set and '=>' would define a variable.
+'ref' references a variable by pointer basically this in C++: *(ptr) = x;
+'&' gets the address (returns ptr values).
+'def' defines function.
+</code>
+<h4>Syntax:</h4>
+<code>
+if ( <expr> ) { <body> }
+if (<expr>) { <body> } else { <body> }
+let <identifier> = <expr>
+let <identifier> => <expr>
+ref <expr> = <expr>
+def <identifier> ( (<param-name> : <param-type>)* ) : <type> { <body> }
+& <expr>
+</code>
+
+<h3> Function overloads </h3>
+<p>
+When using 'def' to define a function, this function will not be indexed within the symbol table only using its identifier or name but using its complete signature, that is, a name composed of its identifier as well as a list of the types of its parameters in order. (for e.g. a function called 'test' that takes two bytes and a char would be 'test(byte,byte,char)' in the symbol table. Therefore you can have as many functions with the same name as you'd like as long as they have different parameter types or combinations thereof.
+</p>
+
+<h4>
+Then, in order to call a specific overload you use '<' and '>' as follows:
+</h4>
+
+<code>
+test<byte>(x) : calls test's byte overload with x
+test<char>(x) : calls test's char overload with x
+test<char, byte, dword>(x) : calls test's (char, byte, dword) overload with x
+</code>
+<h4> Syntax: </h4>
+<code> <function-name> < <param-type>* >(<args>); </code>
+
+<h3> Finally </h3>
+<p>
+Always end a statement with a ';', it doesn't matter if two or more statements are on the same line as long as they each end in ';',
+(kinda free-form)....
+</p>
+<h2> Examples: </h2>
+
+<h3> This works: </h3>
+
+<code>
 let x => 5;
 let y => x * 2;
 let z => x + y * (x * 4 + (2 + x));
@@ -92,56 +166,22 @@ def test(x : dword) : dword
 }
 
 test(55);
+</code>
 
-- Kinda works but not entirely (function overloading):
+<h3> Kinda works but not entirely (function overloading): </h3>
+<code>
 def test(x : byte) : byte { let a => x * x; ret a + x; }
 call test<byte>(x + z);
 call test<dword>(x + z);
-  
-- Doesn't compile properly (type-checking doesn't work but I'm too lazy to fix it): 
+</code>
+	
+<h3> Doesn't compile properly (type-checking doesn't work but I'm too lazy to fix it): </h3>
+<code>
 def pt => &x;
 ref pt => 6;
+</code>
 
+<p>
 Basically most features work except for pointers (these don't compile/transpile properly to NASM assembly) and function overloading.
 This is a little personal project I don't intend to finish it but it's interesting nonetheless so I'm posting the full source code.
-
-Types are:
-byte, word, dword, qword, void,
-signed/unsigned versions of these and pointer versions of these.
-
-Summary:
-Basically, if and else do what you would expect,
-let allows you to set/define variables, '=' would set and '=>' would define a variable.
-Ref references a variable by pointer basically this in C++: *(ptr) = x;
-& gets the address (returns ptr values).
-a value that has 'u' at the end of it e.g. 18u is unsigned, if it then has ('b', 'w' or 'q') then it is a byte, word, qword value respectively if it doesn't specify, it's a dword. Lastly if it has a 'p' then it's a constant pointer memory address.
-
-For e.g.:
-
-15u: unsigned dword
-15ub: unsigned byte
-15ubp: unsigned byte pointer
-
-15b: signed byte
-15bp: signed byte ptr.
-....
-
-If a value is entered as 'x' with x being an ascii character between 0-255 then the corresponding ascii value will be read into a byte value.
-
-'<' and '>' allows you to call a function overload as follows:
-
-test<byte>(x) : calls test's byte overload with x
-test<char>(x) : calls test's char overload with x
-test<char, byte, dword...>(x) : calls test's char, byte, dword.... overload with x
-  
-function_name<param_type_list>(args);
-
-a function is defined using def:
-
-def function_name (parameter_name : parameter_type, ...) : return_type { body }
-where function_name is the identifier for your function,
-parameter_name is a parameter's name, parameter type is a parameter's type (byte, word, dword, qword...unsigned dword ptr...., return_type is the return type (byte, word, dword, qword...unsigned dword ptr....),
-and finally the body is the body which is a list of statements separated by ';'
-
-always end a statement with a ';', it doesn't matter if two or more statements are on the same line as long as they each end in ';',
-(kinda free-form)....
+</p>
