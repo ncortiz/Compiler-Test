@@ -9,34 +9,62 @@ C-like to NASM assembly compiler in one file with combined Lexer- Recursive Desc
 Grammar:
 
  NUM-LIT: [0-9]+ ['b'|'q']? 'u'?
+ 
  CHAR-LIT: '\'' [\0-\255] '\''
+ 
  typespec: 'unsigned'? ('byte' | 'word' | 'dword' | 'qword' | 'void' ) 'ptr'?
+ 
  typespec-list: typespec (',' typespec)*
+ 
  expr-list: expr (',' expr)*
+ 
  param-list : IDENT ':' typespec (',' IDENT ':' typespec)*
+ 
 
  atom-expr: NUM-LIT
+ 
 		  : CHAR-LIT
+		  
 		  : IDENT ('++'| '--' | '(' expr-list? ')' | '<' typespec-list '>' )?
+		  
 		  : ('++' | '--') IDENT
+		  
 		  : ('-' atom | '~' atom | '!' atom | '&' atom | '*' atom)
+		  
 		  : '(' expr ')'
+		  
+
 
 	mul-div-mod-expr:   atom-expr (('*' | '/' | '%') atom-expr)*
+	
 	add-sub-expr:       mul-div-mod-expr (('+' | '-') mul-div-mod-expr)*
+	
 	shift-expr:         add-sub-expr (('<<'|'>>') add-sub-expr)*
+	
 	lt-gt-lte-gte-expr: shift-expr(('<?' | '>?' | '<=' | '>=') shift-expr)*
+	
 	ee-ne-expr:         lt-gt-lte-gte-expr(('=' | '!=')  lt-gt-lte-gte-expr)*
+	
 	bit-and-expr:       ee-ne-expr('&' ee-ne-expr)*
+	
 	bit-xor-expr:       bit-and-expr('^' bit-and-expr)*
+	
 	bit-or-expr:        bit-xor-expr('|' bit-xor-expr)*
+	
 	log-and-expr:       bit-or-expr('&&' bit-or-expr)*
+	
 	log-or-expr:        log-expr('||' log-and-expr)*
+	
 	stmt_expr		   : 'ref' expr '=' expr
+	
 					   : 'let' IDENT ('='|'=>') expr
+					   
 					   : 'def' IDENT '(' param-list? ')' ':' typespec '{' expr_block '}'
+					   
 					   : 'call' expr '(' param-list? ')'
+					   
 					   : 'ret' expr
+					   
              : if '(' expr ')' '{' expr_block '}' ('else' '{' expr_block '}' )?
              
 Examples:
