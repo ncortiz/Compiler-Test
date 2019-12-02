@@ -5,6 +5,7 @@
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License</a>.
 
 C-like to NASM assembly compiler in one file with combined Lexer- Recursive Descent Parser-Compiler written in C++ with only standard libraries, parsers and a nice command line coloring system!
+All in only 1328 lines of code!
 
 Grammar:
 
