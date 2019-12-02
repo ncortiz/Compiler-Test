@@ -88,14 +88,14 @@ If a value is entered as 'x' with x being an ascii character between 0-255 then 
 For e.g.:
 </h4>
 <code>
-15u : unsigned dword
-15ub : unsigned byte
-15ubp : unsigned byte pointer
+15u : unsigned dword,
+15ub : unsigned byte,
+15ubp : unsigned byte pointer,
 
-15b : signed byte
-15bp : signed byte ptr.
-'a' : signed byte
-'@' : signed byte
+15b : signed byte,
+15bp : signed byte ptr,
+'a' : signed byte,
+'@' : signed byte,
 ....
 </code>
 	
@@ -109,13 +109,13 @@ For e.g.:
 </code>
 <h4>Syntax:</h4>
 <code>
-if ( <expr> ) { <body> }
-if (<expr>) { <body> } else { <body> }
-let <identifier> = <expr>
-let <identifier> => <expr>
-ref <expr> = <expr>
-def <identifier> ( (<param-name> : <param-type>)* ) : <type> { <body> }
-& <expr>
+if ( expr ) { body },
+if (expr) { body } else { body },
+let identifier = expr,
+let identifier => expr,
+ref expr = expr,
+def identifier ( (param-name : param-type)* ) : type { body },
+& expr,
 </code>
 
 <h3> Function overloads </h3>
@@ -128,12 +128,12 @@ Then, in order to call a specific overload you use '<' and '>' as follows:
 </h4>
 
 <code>
-test<byte>(x) : calls test's byte overload with x
-test<char>(x) : calls test's char overload with x
-test<char, byte, dword>(x) : calls test's (char, byte, dword) overload with x
+test<byte>(x) : calls test's byte overload with x,
+test<char>(x) : calls test's char overload with x,
+test<char, byte, dword>(x) : calls test's (char, byte, dword) overload with x,
 </code>
 <h4> Syntax: </h4>
-<code> <function-name> < <param-type>* >(<args>); </code>
+<code> function-name < param-type-list >(args); </code>
 
 <h3> Finally </h3>
 <p>
