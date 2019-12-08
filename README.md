@@ -185,3 +185,7 @@ ref pt => 6;
 Basically most features work except for pointers (these don't compile/transpile properly to NASM assembly) and function overloading.
 This is a little personal project I don't intend to finish it but it's interesting nonetheless so I'm posting the full source code.
 </p>
+
+
+<h2> Note </h2>
+<p> I now that the source code is organized terribly that is due to this being a one-day project I worked on. It's anything but a serious project. It's meant to be organized kinda like a c-program but using C++ for strings and other features found therein. </p>
