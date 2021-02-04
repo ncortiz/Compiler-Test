@@ -3,7 +3,7 @@
 <img src="view.png">
 
 <p>
-C-like to NASM assembly compiler in one file with combined Lexer-> Recursive Descent Parser->Code Gen. written in C++ with only standard libraries, parsers and a nice command line coloring system!
+C-like to NASM-like (kinda works? haven't tested generated code) assembly compiler in one file with combined Lexer-> Recursive Descent Parser->Code Gen. written in C++ with only standard libraries, parsers and a nice command line coloring system!
 All in only 1328 lines of code!
 </p>
 
