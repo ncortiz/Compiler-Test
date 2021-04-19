@@ -186,4 +186,4 @@ This is a little personal project I don't intend to finish it but it's interesti
 
 
 <h2> Note </h2>
-<p> I now that the source code is organized terribly that is due to this being a one-day project I worked on. It's anything but a serious project. It's meant to be organized kinda like a c-program but using C++ for strings and other features found therein. </p>
+<p> I now that the source code is organized terribly that is due to this being a one-day project I worked on. It's anything but a serious project. It's meant to be organized kinda like a c-program but using C++ for strings and other features found in there. There's tons stuff you would never do in production code that would lead to very hard to debug code (like this!) </p>
