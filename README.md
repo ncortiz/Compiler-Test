@@ -1,6 +1,6 @@
 # Single-File-Compiler-From-Scratch-Recursive-Descent-LR-and-NASM-asm-gen
 
-Note: This is a very rough implementation of a RD parser, I've just kept it because it was added to the artic code vault 2020, for a better code base see my repository Calc-
+Note: This is a very rough implementation of a RD parser, I've just kept it because it was added to the artic code vault 2020, for a better code base see my repository "Calc-".
 
 <img src="view.png">
 
