@@ -1,5 +1,7 @@
 # Single-File-Compiler-From-Scratch-Recursive-Descent-LR-and-NASM-asm-gen
 
+Note: This is a very rough implementation of a RD parser, for a better code base see my repository Calc-
+
 <img src="view.png">
 
 <p>
